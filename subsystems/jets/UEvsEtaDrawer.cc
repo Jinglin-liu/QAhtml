@@ -284,10 +284,10 @@ void UEvsEtaDrawer::DoDrawing(const uint32_t trig, const uint32_t /*res*/)
     }
   };
 
+  /* Drop centrality dependent plots until centrality info is fixed
   // draw v2 psi2 plots on one page
   DrawHists("UEvsEta_v2psi2", {0, 1}, hists, trig);
 
-  /* Drop centrality dependent plots until centrality info is fixed
   // draw emcal plots on one page
   DrawHists("UEvsEta_EMCal", {2, 3, 4}, hists, trig);
 
