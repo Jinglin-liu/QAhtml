@@ -196,12 +196,12 @@ void JetCstDrawer::DoDrawing(const uint32_t trig, const uint32_t res)
       "Jet N Constituents vs Calo Layer",
       "Calo Layer",
       "N Constituents",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_efracjet_cemc")),
@@ -244,12 +244,12 @@ void JetCstDrawer::DoDrawing(const uint32_t trig, const uint32_t res)
       "Jet E Fraction vs Calo Layer",
       "Calo Layer",
       "Jet E Fraction",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     }
   };
 

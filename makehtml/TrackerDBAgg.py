@@ -8,7 +8,7 @@ import time
 import argparse
 import hashlib
 
-runtypes = ["run3auau"]
+runtypes = ["run3pp", "run3auau"]
 
 parser = argparse.ArgumentParser(description="Aggregate the QA histogram files produced for each DST segment of a run into a single QA histogram file per run.")
 parser.add_argument("-v","--verbose",help="add additional printing", action="store_true")
@@ -66,7 +66,7 @@ def main():
             runs_dbtags = get_unique_run_dataset_pairs(cursor, histtype, runtype)
           
             for run, dbtag in runs_dbtags:
-                if run < 70000:
+                if run < 78000:
                     continue
                 print("Processing run " + str(run))
                 filepaths = getPaths(cursor, run, dbtag, histtype, runtype)

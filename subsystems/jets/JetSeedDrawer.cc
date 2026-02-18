@@ -118,12 +118,12 @@ void JetSeedDrawer::DoDrawing(const uint32_t trig, const uint32_t /*res*/)
       "Raw Seed #eta vs #phi",
       "Seed #eta_{raw} [Rads.]",
       "Seed #phi_{raw} [Rads.]",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_rawpt")),
@@ -166,12 +166,12 @@ void JetSeedDrawer::DoDrawing(const uint32_t trig, const uint32_t /*res*/)
       "Subtracted Seed #eta vs #phi",
       "Seed #eta_{sub} [Rads.]",
       "Seed #phi_{sub} [Rads.]",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_subpt")),

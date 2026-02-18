@@ -140,15 +140,45 @@ namespace JetDrawDefs
   }
 
   // ==========================================================================
-  //! Helper method to heck if a run number is p+p or Au+Au
+  //! Helper method to check if a run number is p+p or Au+Au
   // ==========================================================================
   /*! Used to check if a run falls in p+p running:
    *    - Start: Run 30392 (1st recorded run of run 2, 02.26.2024)
    *    - Stop: Run 53880 (end of p+p running, 09.30.2024)
+   *    - Restart: Run 78954 (end of Au+Au running, 12.08.2025)
+   *    - Stop: Run ____ (end of p+p running, TBD)
    */
   inline bool IsPP(const int run)
   {
-    return (run > 30392) && (run <= 53880);
+    return ((run > 30392) && (run <= 53880)) || 
+            (run > 78954) ;
+  }
+
+  // ==========================================================================
+  //! Helper struct to consolidate reference run info
+  // ==========================================================================
+  struct RefRunInfo {
+    std::string run;
+    std::string file;
+  };
+  
+  // ==========================================================================
+  //! Helper method to get reference run info based on input run number
+  // ==========================================================================
+  inline RefRunInfo GetRefRunInfo(const int run)
+  {
+    if (IsPP(run)) {
+      return {
+        "79226", //pp reference run TBD
+        "/sphenix/tg/tg01/jets/jamesj3j3/run25_jet_hists/new_newcdbtag_v008/pptesting/Added/HIST_JETQA-00079226-99999.root"
+        //"/sphenix/tg/tg01/jets/jamesj3j3/run25_jet_hists/ana509_2024p022_v001/testing/Added/HIST_JETQA-00053880-99999.root"
+      };
+    } else {
+      return {
+        "72592",
+        "/sphenix/tg/tg01/jets/jamesj3j3/run25_jet_hists/new_newcdbtag_v008/testing/Added/HIST_JETQA-00072592-99999.root"
+      };
+    }
   }
 
   // ==========================================================================

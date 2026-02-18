@@ -8,7 +8,7 @@ if [ ${histtype} = "mvtxhit" ]; then
     XVFB_PID=$!
     export DISPLAY=unix:2
 elif [ ${histtype} = "intthit" ]; then
-    Xvfb :12 -nolisten tcp &
+    Xvfb :22 -nolisten tcp &
     XVFB_PID=$!
     export DISPLAY=unix:22
 elif [ ${histtype} = "tpchit" ]; then

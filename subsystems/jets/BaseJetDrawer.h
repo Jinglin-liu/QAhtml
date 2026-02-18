@@ -112,8 +112,8 @@ class BaseJetDrawer
                        double tsize = 0.04);
 
     // QA reference file path
-    std::string refFilePath = "/sphenix/tg/tg01/jets/jamesj3j3/run25_jet_hists/new_newcdbtag_v008/golden_run_test/AddedSegments/HIST_JETQA-00072592-99999.root";
-    std::string refRunNum = "72592";
+    std::string refFilePath;
+    std::string refRunNum;
 
 };  // end BaseJetDrawer
 

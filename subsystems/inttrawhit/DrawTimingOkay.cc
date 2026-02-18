@@ -68,6 +68,14 @@ DrawTimingOkay::DrawCanvas (
 	title_text.SetTextSize(0.5);
 	title_text.DrawText(0.5, 0.5, (boost::format("INTT Timing, Run %08d") % cl->RunNumber()).str().c_str());
 
+	// Some of the original productions were for triggered only
+	// instead of throwing some kind of error or early return,
+	// assume it is triggered if the hist isn't in the file
+	bool streaming = false;
+	std::string is_streaming_hist_name = (boost::format("%s_is_streaming") % m_prefix).str();
+	auto* is_streaming_hist = dynamic_cast<TH1*>(cl->getHisto(is_streaming_hist_name.c_str()));
+	if (is_streaming_hist) { streaming = (is_streaming_hist->GetBinContent(1) == 1); }
+
 	// For each felix server, get the distribution of peaks over felix channels
 	std::array<std::map<int, int>, 8> server_peak_counts;
 	std::array<int, 8> masked_felix_channels{};
@@ -127,6 +135,8 @@ DrawTimingOkay::DrawCanvas (
 			// Ignore masked/empty channels, subtract the number of masked channels from the requirement
 			if (itr->second == -1) { continue; }
 			timing_okay_by_channel[felix_server] = !(itr->first < m_min_timed_channels - num_masked);
+			// In the streaming case, require the server peaks occur at 24
+			if (streaming) { timing_okay_by_channel[felix_server] = timing_okay_by_channel[felix_server] && (itr->second == 24); }
 			timing_okay = (timing_okay && timing_okay_by_channel[felix_server]);
 			break;
 		}

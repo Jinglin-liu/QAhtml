@@ -6,7 +6,11 @@ import os
 import os.path
 import subprocess
 import pyodbc
+from datetime import datetime
 
+# Current date and time
+now = datetime.now()
+print("Starting this script at "+str(datetime.now()))
 parser = argparse.ArgumentParser(description="Create the HTML files with QA histograms files for all events in a run.")
 parser.add_argument("-v","--verbose",help="add additional printing", action="store_true")
 parser.add_argument("-ht","--histotype",help="histotype to draw, calo, fitting, global")
@@ -15,7 +19,7 @@ args = parser.parse_args()
 if args.test and not args.verbose:
     args.verbose = True
     
-runtypes = ["_run3auau"]
+runtypes = ["_run3pp", "_run3auau"]
 subsys = {}
 if args.histotype == "calofitting":
     subsys = { "calofitting" : ["HIST_CALOFITTINGQA","CALOFITTINGQA","draw_calo_fitting.C"]}
@@ -32,8 +36,9 @@ print(subsys)
 qapath = os.environ.get("QA_HTMLDIR")+"/physics"
 
 
-def get_aggregated_files(cursor, dsttype):
-    query = "SELECT full_file_path FROM files WHERE lfn in (select filename from datasets files where dsttype='{}' and segment=9999)".format(dsttype)
+def get_aggregated_files(cursor, dsttype, runtype):
+    runtype_nounderscore = runtype[1:]
+    query = "SELECT full_file_path FROM files WHERE lfn in (select filename from datasets files where dsttype='{}' and segment=9999 and dataset='{}' and filename not like '%auau%')".format(dsttype,runtype_nounderscore)
     if args.verbose :
         print(query)
     cursor.execute(query)
@@ -49,6 +54,7 @@ def get_file(cursor, dsttype, runnumber):
 
 def getBuildDbTag(type, filename):
     parts = filename.split("_")
+    
     index = parts.index(type[1:])
     if args.verbose == True:
         print("db tag is " + parts[index+2])
@@ -59,13 +65,13 @@ def main():
     cursor = conn.cursor()
     for runtype in runtypes:
         for s in subsys:
-            full_paths = get_aggregated_files(cursor, subsys[s][0])
+            full_paths = get_aggregated_files(cursor, subsys[s][0], runtype)
 
             subsysAggRuns = {}
             subsysAggRunsDbtag = {}
             for aggfile in full_paths:
                 runnumber = int(aggfile.split("/")[-1].split("-")[1])
-                if runnumber < 66000:
+                if runnumber < 78000:
                     continue
                 if args.verbose:
                     print("agg file is " +aggfile)
@@ -132,14 +138,20 @@ def main():
                             print("file options")
                             print(aggFile)
                         # find the file with the most recent db tag
+                        
                         for file in aggFile:
                             # find the db string
+                            # To remove later, this is to get by
+                            # chris' accidental production of pp files with auau
+                            if file.find("auau") != -1:
+                                continue
                             filename = file.split("/")[-1]
                             dbtag = getBuildDbTag(runtype, filename)
-                            print("dbtag is " + dbtag)
-                            print("dbtag to draw is " + str(dbtagToDraw))
-                            print("file to draw is " +fileToDraw)
-                            print("this file is " + filename)
+                            if args.verbose:
+                                print("dbtag is " + dbtag)
+                                print("dbtag to draw is " + str(dbtagToDraw))
+                                print("file to draw is " +fileToDraw)
+                                print("this file is " + filename)
                             if dbtag.find("newcdbtag") != -1 and int(filename.split("_v")[1][0:3]) > int(dbtagToDraw):
                                 fileToDraw = file
                                 dbtagToDraw = int(filename.split("_v")[1][0:3])

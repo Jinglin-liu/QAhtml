@@ -38,6 +38,16 @@ void draw_calo_jet(const std::string& infile,
   gStyle -> SetOptTitle(1);
   gROOT  -> ForceStyle();
 
+  // create draw client
+  QADrawClient* client = QADrawClient::instance();
+
+  // read histograms from file
+  client -> ReadHistogramsFromFile(infile);
+  if (do_debug)
+  {
+    std::cout << " --- Histograms read" << std::endl;
+  }
+
   // create instance of relevant module
   CaloJetDraw* jets = new CaloJetDraw();
   jets -> SetDoDebug(do_debug);
@@ -46,19 +56,11 @@ void draw_calo_jet(const std::string& infile,
     jets -> SetDoLocal(true);
   }
 
-  // create draw client
-  QADrawClient* client = QADrawClient::instance();
+  // register drawer
   client -> registerDrawer(jets);
   if (do_debug)
   {
     std::cout << " --- JetDraw client registered" << std::endl;
-  }
-
-  // read histograms from file
-  client -> ReadHistogramsFromFile(infile);
-  if (do_debug)
-  {
-    std::cout << " --- Histograms read" << std::endl;
   }
 
   // make html page if needed

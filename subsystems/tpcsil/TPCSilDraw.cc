@@ -115,23 +115,25 @@ int TPCSilDraw::DrawPositionInfo()
   std::cout << "TPCSil DrawPositionInfo() Beginning" << std::endl;
   QADrawClient *cl = QADrawClient::instance();
 
-  TH1 *h_crossing = dynamic_cast <TH1 *> (cl->getHisto(histprefix + std::string("crossing"))); 
+  //TH1 *h_crossing = dynamic_cast <TH1 *> (cl->getHisto(histprefix + std::string("crossing"))); 
   TH1F *h_xDiff = dynamic_cast <TH1F *> (cl->getHisto(histprefix + std::string("xDiff")));
   TH1F *h_yDiff = dynamic_cast <TH1F *> (cl->getHisto(histprefix + std::string("yDiff")));
   TH1F *h_zDiff = dynamic_cast <TH1F *> (cl->getHisto(histprefix + std::string("zDiff")));
   TH1F *h_phiDiff = dynamic_cast <TH1F *> (cl->getHisto(histprefix + std::string("phiDiff")));
   TH1F *h_etaDiff = dynamic_cast <TH1F *> (cl->getHisto(histprefix + std::string("etaDiff")));
+  TH2F *h_corr = dynamic_cast<TH2F*>(cl->getHisto(histprefix+std::string("tpcsiletaphi")));
 
-  if (! gROOT->FindObject("crossing_info"))
+  if (! gROOT->FindObject("tpc-silicon_correlation"))
   {
-    MakeCanvas("crossing_info", 0);
+    MakeCanvas("tpc_silicon_correlation", 0);
   }
   TC[0]->Clear("D");
   Pad[0][0]->cd();
-  if (h_crossing)
+  if (h_corr)
   {
-    h_crossing->DrawCopy("HIST");
-    gPad->SetRightMargin(0.15);
+    std::cout << "drawing this one"<<std::endl;
+    h_corr->Draw("COLZ");
+    //gPad->SetRightMargin(0.15);
   }
   else
   {

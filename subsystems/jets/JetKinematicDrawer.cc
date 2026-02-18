@@ -149,36 +149,36 @@ void JetKinematicDrawer::DoDrawing(const uint32_t trig, const uint32_t res)
       "Jet #eta vs. #phi",
       "Jet #eta",
       "Jet #phi",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histPrefix + "_jetptvseta")),
       "Jet p_{T} vs. #eta",
       "Jet #eta",
       "Jet p_{T} [GeV]",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histPrefix + "_jetptvsphi")),
       "Jet p_{T} vs. #phi",
       "Jet #phi",
       "Jet p_{T} [GeV]",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     
     //// Page 2
@@ -187,12 +187,12 @@ void JetKinematicDrawer::DoDrawing(const uint32_t trig, const uint32_t res)
       "Jet Mass vs #eta",
       "Jet #eta",
       "Jet Mass [GeV]",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histPrefix + "_jetmassvseta_pfx")),
@@ -211,12 +211,12 @@ void JetKinematicDrawer::DoDrawing(const uint32_t trig, const uint32_t res)
       "Jet Mass vs p_{T}",
       "Jet p_{T} [GeV]",
       "Jet Mass [GeV]",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histPrefix + "_jetmassvspt_pfx")),

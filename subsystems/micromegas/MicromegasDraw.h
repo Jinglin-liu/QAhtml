@@ -16,11 +16,19 @@ class MicromegasDraw : public QADraw
  public:
   MicromegasDraw(const std::string &name = "MicromegasQA");
 
-  int Draw(const std::string &what = "ALL") override;
-  int MakeHtml(const std::string &what = "ALL") override;
-  int DBVarInit();
+  //! initialization
+  int Init() override;
 
+  //! draw canvas
+  int Draw(const std::string &what = "ALL") override;
+
+  //! make HTML
+  int MakeHtml(const std::string &what = "ALL") override;
+
+  //! convenience to define min and maximum acceptable range for a give variable
   using range_t = std::pair<double,double>;
+
+  //! convenience to define per detector/packet list of acceptable ranges
   using range_list_t = std::vector<range_t>;
 
   //! acceptable n detector range
@@ -158,6 +166,13 @@ class MicromegasDraw : public QADraw
   { m_detector_efficiency_range = {n_questionable,n_good}; }
 
   private:
+
+  // set cuts for run3 Au+Au
+  void setup_cuts_run3_auau();
+
+  // set cuts for run3 p+p
+  void setup_cuts_run3_pp();
+
   TH1* get_detector_average(TH2*, double /*offset*/ = 0);
 
   // get canvas by name
@@ -196,126 +211,54 @@ class MicromegasDraw : public QADraw
   //! number of fee boards
   static constexpr int m_nfee_max = 26;
 
+  /**
+   * all acceptable rnages are defined in either
+   * setup_cuts_run3_auau or
+   * setup_cuts_run3_pp
+   * depending on the run number
+   */
+
   //! acceptable gl1 drop rate
-  range_list_t m_gl1_drop_rate_range = range_list_t(m_npackets_active+1, {0, 0.01});
+  range_list_t m_gl1_drop_rate_range = range_list_t(m_npackets_active+1);
 
   //! acceptable numbers of good packets for g1l drop rate
-  detector_range_t m_packet_gl1_drop_rate_range = {3,3};
+  detector_range_t m_packet_gl1_drop_rate_range = {};
 
   //! acceptable per packet waveform drop rate
-  range_list_t m_waveform_drop_rate_range = range_list_t(m_npackets_active+1, {0, 0.05});
+  range_list_t m_waveform_drop_rate_range = range_list_t(m_npackets_active+1);
 
   //! acceptable numbers of good packets for waveform drop rate
-  detector_range_t m_packet_wf_drop_rate_range = {3,3};
+  detector_range_t m_packet_wf_drop_rate_range = {};
 
   //! acceptable per packet waveform drop rate
-  range_list_t m_fee_waveform_drop_rate_range = {
-    {0, 0.05}, {0, 0.05}, {0, 0.00}, {0, 0.00}, {0, 0.00},
-    {0, 0.05}, {0, 0.05}, {0, 0.05}, {0, 0.05}, {0, 0.05},
-    {0, 0.00}, {0, 0.00}, {0, 0.05}, {0, 0.00}, {0, 0.05},
-    {0, 0.05}, {0, 0.00}, {0, 0.00}, {0, 0.05}, {0, 0.05},
-    {0, 0.00}, {0, 0.05}, {0, 0.00}, {0, 0.05}, {0, 0.05},
-    {0, 0.05} };
+  range_list_t m_fee_waveform_drop_rate_range = range_list_t(m_nfee_max);
 
   //! acceptable numbers of good fee for waveform drop rate
-  detector_range_t m_fee_wf_drop_rate_range = {8,13};
+  detector_range_t m_fee_wf_drop_rate_range = {};
 
   //! acceptable cluster multiplicity range
-  range_list_t m_cluster_multiplicity_range ={
-    {1.5,3.}, // SCOP
-    {1.5,3.}, // SCIP
-    {1.5,3.}, // NCIP
-    {1.5,3.}, // NCOP
-    {1.5,3.}, // SEIP
-    {1.5,3.}, // NEIP
-    {1.5,3.}, // SWIP
-    {1.5,3.}, // NWIP
-    {1.6,3.2}, // SCOZ
-    {1.6,3.2}, // SCIZ
-    {1.6,3.2}, // NCIZ
-    {1.6,3.2}, // NCOZ
-    {1.6,3.2}, // SEIZ
-    {1.6,3.2}, // NEIZ
-    {1.6,3.2}, // SWIZ
-    {1.6,3.2} // NWIZ
-  };
+  range_list_t m_cluster_multiplicity_range = range_list_t(m_nfee_active);
 
   //! acceptable numbers of good detectors for cluster multiplicity
-  detector_range_t m_detector_cluster_mult_range = {8,15};
+  detector_range_t m_detector_cluster_mult_range = {};
 
   //! acceptable cluster size range
-  range_list_t m_cluster_size_range = {
-    {2., 3.5}, // SCOP
-    {2., 3.5}, // SCIP
-    {2., 3.5}, // NCIP
-    {2., 3.5}, // NCOP
-    {2., 3.5}, // SEIP
-    {2., 3.5}, // NEIP
-    {2., 3.5}, // SWIP
-    {2., 3.5}, // NWIP
-    {1.5,3.}, // SCOZ
-    {1.5,3.}, // SCIZ
-    {1.5,3.}, // NCIZ
-    {1.5,3.}, // NCOZ
-    {1.5,3.}, // SEIZ
-    {1.5,3.}, // NEIZ
-    {1.5,3.}, // SWIZ
-    {1.5,3.} // NWIZ
-  };
+  range_list_t m_cluster_size_range = range_list_t(m_nfee_active);
 
   //! acceptable numbers of good detectors for cluster size
-  detector_range_t m_detector_cluster_size_range = {8,15};
+  detector_range_t m_detector_cluster_size_range = {};
 
   //! acceptable cluster charge range
-  range_list_t m_cluster_charge_range = {
-    {450,800}, // SCOP
-    {450,800}, // SCIP
-    {350,800}, // NCIP
-    {450,800}, // NCOP
-  // {450,800}, // SEIP
-    {400,800}, // SEIP
-    {450,800}, // NEIP
-  // {450,800}, // SWIP
-    {400,800}, // SWIP
-    {450,800}, // NWIP
-    {400,750}, // SCOZ
-    {400,750}, // SCIZ
-    {400,750}, // NCIZ
-    {400,750}, // NCOZ
-  // {400,750}, // SEIZ
-    {350,750}, // SEIZ
-    {400,750}, // NEIZ
-    {400,750}, // SWIZ
-    {400,750} // NWIZ
-  };
-
+  range_list_t m_cluster_charge_range = range_list_t(m_nfee_active);
 
   //! acceptable numbers of good detectors for cluster charge
-  detector_range_t m_detector_cluster_charge_range = {8,15};
+  detector_range_t m_detector_cluster_charge_range = {};
 
   //! acceptable efficiency range
-  range_list_t m_efficiency_range =
-  {
-    {0.65,1.0}, // SCOP
-    {0.65,1.0}, // SCIP
-    {0.60,1.0}, // NCIP
-    {0.65,1.0}, // NCOP
-    {0.65,1.0}, // SEIP
-    {0.65,1.0}, // NEIP
-    {0.65,1.0}, // SWIP
-    {0.65,1.0}, // NWIP
-    {0.40,1.0}, // SCOZ
-    {0.70,1.0}, // SCIZ
-    {0.70,1.0}, // NCIZ
-    {0.70,1.0}, // NCOZ
-    {0.70,1.0}, // SEIZ
-    {0.70,1.0}, // NEIZ
-    {0.70,1.0}, // SWIZ
-    {0.70,1.0}  // NWIZ
-  };
+  range_list_t m_efficiency_range = range_list_t(m_nfee_active);
 
   //! acceptable numbers of good detectors for efficiency estimate
-  detector_range_t m_detector_efficiency_range = {9,15};
+  detector_range_t m_detector_efficiency_range = {};
 
 };
 

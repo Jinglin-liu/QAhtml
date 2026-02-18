@@ -6,6 +6,11 @@ import os
 import os.path
 import subprocess
 import pyodbc
+from datetime import datetime
+
+# Current date and time
+now = datetime.now()
+print("Starting this script at "+str(datetime.now()))
 
 parser = argparse.ArgumentParser(description="Create the HTML files with QA histograms files for all events in a run.")
 parser.add_argument("-v","--verbose",help="add additional printing", action="store_true")
@@ -45,12 +50,13 @@ elif histoarg == "bco":
 print("subsys list is")
 print(subsys)
     
-runtypes = ["_run3auau"]
+runtypes = ["_run3pp", "_run3auau"]
 
 qapath = os.environ.get("QA_HTMLDIR")+"/physics"
 
-def get_aggregated_files(cursor, dsttype):
-    query = "SELECT full_file_path FROM files WHERE lfn in (select filename from datasets files where dsttype='{}' and (segment=9999 or segment=99999)) and full_file_path like '/sphenix/data/data02/sphnxpro/QAhtml%'".format(dsttype)
+def get_aggregated_files(cursor, dsttype, runtype):
+    runtype_nou = runtype[1:]
+    query = "SELECT full_file_path FROM files WHERE lfn in (select filename from datasets files where dsttype='{}' and (segment=9999 or segment=99999) and dataset='{}') and full_file_path like '/sphenix/data/data02/sphnxpro/QAhtml%'".format(dsttype,runtype_nou)
     if args.verbose :
         print(query)
     cursor.execute(query)
@@ -66,6 +72,7 @@ def get_file(cursor, dsttype, runnumber):
 
 def getBuildDbTag(type, filename):
     parts = filename.split("_")
+    print(parts)
     index = parts.index(type[1:])
     if args.verbose == True:
         print("db tag is " + parts[index+2])
@@ -85,14 +92,14 @@ def main():
     for dictionary in subsys:
         for runtype in runtypes:
             for s in dictionary:
-                full_paths = get_aggregated_files(cursor, dictionary[s][0])
+                full_paths = get_aggregated_files(cursor, dictionary[s][0], runtype)
 
                 subsysAggRuns = {}
                 subsysAggRunsDbtag = {}
                 for aggfile in full_paths:
                     
                     runnumber = int(aggfile.split("/")[-1].split("-")[1])
-                    if runnumber < 66000:
+                    if runnumber < 78000:
                         continue
                     if aggfile.find("_run3physics") != -1:
                         continue
@@ -142,7 +149,7 @@ def main():
                    
                     if (not run in qaFilesModified) or (qaFilesModified[run] < subsysAggRuns[run]) :
                         
-                        if run < 66000:
+                        if run < 79000:
                             continue
                         
                         aggFile= get_file(cursor, dictionary[s][0], run)
@@ -223,6 +230,6 @@ def main():
 
     conn.close()
     print("Finished script")
-    
+    print("Finishing this script at "+str(datetime.now()))
 if __name__ == "__main__":
     main()

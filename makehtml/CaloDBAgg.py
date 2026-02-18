@@ -9,7 +9,7 @@ import argparse
 import hashlib
 
 track_hist_types = ["HIST_CALOQA","HIST_CALOFITTINGQA","HIST_JETS"]
-runtypes = ["run3auau"]
+runtypes = ["run3pp","run3auau"]
 
 
 parser = argparse.ArgumentParser(description="Aggregate the QA histogram files produced for each DST segment of a run into a single QA histogram file per run.")
@@ -79,7 +79,7 @@ def main():
                 print(runs_dbtags)
             for run, dbtag in runs_dbtags:
                 print("Processing run " + str(run))
-                if run < 75000:
+                if run < 78000:
                     continue
                 if str(dbtag).find("ana") == -1 and str(dbtag).find("new") == -1:
                     print ("weird db tag " + str(dbtag) + ", skipping")

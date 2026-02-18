@@ -99,11 +99,15 @@ CaloJetDraw::CaloJetDraw(const std::string& name,
                                                              debug);
 
   // for underlying event vs eta plots
-  m_drawers["UEETA"] = std::make_unique<UEvsEtaDrawer>("UEvsEta",
-                                                      name,
-                                                      type,
-                                                      "h_uevsetacent",
-                                                      debug);
+  if (!m_is_pp)
+  {
+    m_drawers["UEETA"] = std::make_unique<UEvsEtaDrawer>("UEvsEta",
+                                                        name,
+                                                        type,
+                                                        "h_uevsetacent",
+                                                        debug);
+  }
+
 
 }
 

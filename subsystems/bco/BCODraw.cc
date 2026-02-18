@@ -175,16 +175,19 @@ int BCODraw::DrawMVTX()
   QADrawClient *cl = QADrawClient::instance();
 
   const int nmvtxpacket = 12;
-  // const int nmvtxfees = 12;
 
-  auto h_mvtxrefgl1 = dynamic_cast<TH1 *>(cl->getHisto("h_MvtxPoolQA_RefGL1BCO"));
   std::ostringstream name;
   bool missingHisto = false;
 
+  TH1 *mvtxrefgl1[nmvtxpacket];
   TH1 *feesstrobemvtx[nmvtxpacket];
   TH1 *feesll1mvtx[nmvtxpacket];
   for (int i = 0; i < nmvtxpacket; i++)
   {
+    name.str("");
+    name <<"h_MvtxPoolQA_RefGL1BCO_endpoint"<<i;
+    mvtxrefgl1[i] = dynamic_cast<TH1 *>(cl->getHisto(name.str().c_str()));
+
     name.str("");
     name << "h_MvtxPoolQA_TagStBcoFEEsPacket" << i;
     feesstrobemvtx[i] = dynamic_cast<TH1 *>(cl->getHisto(name.str().c_str()));
@@ -197,13 +200,13 @@ int BCODraw::DrawMVTX()
       missingHisto = true;
     }
   }
-
-  if (!missingHisto)
+  if (!missingHisto) 
   {
-    const int mvtxgl1 = h_mvtxrefgl1->GetEntries() / (nmvtxpacket / 2);
+
     TH1 *feesstrobefrac[nmvtxpacket];
     for (int i = 0; i < nmvtxpacket; i++)
     {
+      const int mvtxgl1 = mvtxrefgl1[i]->GetEntries();
       name.str("");
       name << "feesstrobefrac" << i;
       feesstrobefrac[i] = new TH1F(name.str().c_str(), ";FEEID;GL1 Strobe Tag Frac", 12, 0, 12);
@@ -228,6 +231,8 @@ int BCODraw::DrawMVTX()
     TH1 *feesll1frac[nmvtxpacket];
     for (int i = 0; i < nmvtxpacket; i++)
     {
+      const int mvtxgl1 = mvtxrefgl1[i]->GetEntries();
+
       name.str("");
       name << "feesl1frac" << i;
       feesll1frac[i] = new TH1F(name.str().c_str(), ";FEEID;GL1 LL1 Tag Frac", 12, 0, 12);

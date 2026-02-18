@@ -783,8 +783,10 @@ int GlobalQADraw::DrawsEPD(const std::string & /*what*/)
 
     if(_max2 < _max1) _histmax = _max1;
 
-    h_GlobalQA_sEPD_adcsum_n->GetXaxis()->SetRangeUser(0, 1.5e6);
-    h_GlobalQA_sEPD_adcsum_s->GetXaxis()->SetRangeUser(0, 1.5e6);
+    // h_GlobalQA_sEPD_adcsum_n->GetXaxis()->SetRangeUser(0, 1.5e6); // AuAu
+    // h_GlobalQA_sEPD_adcsum_s->GetXaxis()->SetRangeUser(0, 1.5e6); // AuA
+    h_GlobalQA_sEPD_adcsum_n->GetXaxis()->SetRangeUser(0, 2e4); // pp
+    h_GlobalQA_sEPD_adcsum_s->GetXaxis()->SetRangeUser(0, 2e4); // pp
     h_GlobalQA_sEPD_adcsum_n->GetYaxis()->SetRangeUser(0, _histmax + _add);
     h_GlobalQA_sEPD_adcsum_s->GetYaxis()->SetRangeUser(0, _histmax + _add);
 
@@ -826,8 +828,10 @@ int GlobalQADraw::DrawsEPD(const std::string & /*what*/)
   {
 
     h2_GlobalQA_sEPD_adcsum_ns->SetTitle("sEPD North-South Correlation");
-    h2_GlobalQA_sEPD_adcsum_ns->GetXaxis()->SetRangeUser(0, 1.5e6);
-    h2_GlobalQA_sEPD_adcsum_ns->GetYaxis()->SetRangeUser(0, 1.5e6);
+    // h2_GlobalQA_sEPD_adcsum_ns->GetXaxis()->SetRangeUser(0, 1.5e6); // AuAu
+    // h2_GlobalQA_sEPD_adcsum_ns->GetYaxis()->SetRangeUser(0, 1.5e6); // AuAu
+    h2_GlobalQA_sEPD_adcsum_ns->GetXaxis()->SetRangeUser(0, 2e4); // pp
+    h2_GlobalQA_sEPD_adcsum_ns->GetYaxis()->SetRangeUser(0, 2e4); // pp
     h2_GlobalQA_sEPD_adcsum_ns->SetXTitle("sEPD south ADC sum");
     h2_GlobalQA_sEPD_adcsum_ns->SetYTitle("sEPD north ADC sum");
     h2_GlobalQA_sEPD_adcsum_ns->SetStats(0);

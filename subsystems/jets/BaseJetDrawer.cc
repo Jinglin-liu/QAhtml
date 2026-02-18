@@ -470,6 +470,24 @@ void BaseJetDrawer::NormalizeHist(const JetDrawDefs::HistAndOpts& hist)
 // ----------------------------------------------------------------------------
 JetDrawDefs::VHistAndOpts1D BaseJetDrawer::BuildRefHists(const JetDrawDefs::VHistAndOpts1D& hists)
 {
+  // connect to draw client, get run number
+  QADrawClient* cl = QADrawClient::instance();
+  int runNum = cl->RunNumber();
+  const bool is_pp = JetDrawDefs::IsPP(runNum);
+
+  if (m_do_debug)
+  {
+    std::cout << std::boolalpha
+              << "  -- Reading Reference File\n" 
+              << "  -- Drawers: run is pp? : " << is_pp 
+              << std::endl;
+  }
+
+  // get reference run info according to run number
+  JetDrawDefs::RefRunInfo ref = JetDrawDefs::GetRefRunInfo(runNum);
+  refFilePath = ref.file;
+  refRunNum = ref.run;
+
   // read reference file 
   TFile *refFile = TFile::Open(refFilePath.c_str(), "READ");
   if (!refFile || refFile->IsZombie()) {

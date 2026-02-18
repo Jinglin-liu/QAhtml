@@ -115,24 +115,24 @@ void UEvsEtaDrawer::DoDrawing(const uint32_t trig, const uint32_t /*res*/)
       "v_{2} in centrality bins",
       "Centrality",
       "v_{2}",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_psi2_cent")),
       "#Psi_{2} in centrality bins",
       "Centrality",
       "#Psi_{2}",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     // emcal
     {
@@ -140,36 +140,36 @@ void UEvsEtaDrawer::DoDrawing(const uint32_t trig, const uint32_t /*res*/)
       "UE vs. #eta, centrality (0, 20]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_emcaleta_cent20_50")),
       "UE vs. #eta, centrality (20, 50]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_emcaleta_cent50_100")),
       "UE vs. #eta, centrality (50, 100]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     // ihcal
     {
@@ -177,36 +177,36 @@ void UEvsEtaDrawer::DoDrawing(const uint32_t trig, const uint32_t /*res*/)
       "UE vs. #eta, centrality (0, 20]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_ihcaleta_cent20_50")),
       "UE vs. #eta, centrality (20, 50]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_ihcaleta_cent50_100")),
       "UE vs. #eta, centrality (50, 100]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     // ohcal
     {
@@ -214,36 +214,36 @@ void UEvsEtaDrawer::DoDrawing(const uint32_t trig, const uint32_t /*res*/)
       "UE vs. #eta, centrality (0, 20]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_ohcaleta_cent20_50")),
       "UE vs. #eta, centrality (20, 50]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_ohcaleta_cent50_100")),
       "UE vs. #eta, centrality (50, 100]",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     // all centrality plots
     {
@@ -251,36 +251,36 @@ void UEvsEtaDrawer::DoDrawing(const uint32_t trig, const uint32_t /*res*/)
       "UE vs. #eta, EMCal",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_ihcaleta")),
       "UE vs. #eta, IHCal",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_ohcaleta")),
       "UE vs. #eta, OHCal",
       "#eta",
       "Underlying Event",
-      "Normalized counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     }
   };
 

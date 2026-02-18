@@ -8,9 +8,10 @@ void draw_micromegas(const std::string &rootfile) {
   QADrawClient *cl = QADrawClient::instance();
   /* cl->Verbosity(1); */
   QADraw *ex = new MicromegasDraw();
-  cl->registerDrawer(ex);
 
   cl->ReadHistogramsFromFile(rootfile);
+  
+  cl->registerDrawer(ex);
   /* cl->Print("ALL"); */
   cl->MakeHtml();
   delete cl;

@@ -128,36 +128,36 @@ void EMClusterKinematicDrawer::DoDrawing(const uint32_t trig, const uint32_t /*r
       "Cluster #chi^{2} vs. E_{T}",
       "E_{T} [GeV]",
       "#chi^{2}",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_chi2_eta")),
       "Cluster #chi^{2} vs. #eta",
       "#eta",
       "#chi^{2}",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_chi2_phi")),
       "Cluster #chi^{2} vs. #varphi",
       "#varphi [rad.]",
       "#chi^{2}",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_energy")),
@@ -176,36 +176,36 @@ void EMClusterKinematicDrawer::DoDrawing(const uint32_t trig, const uint32_t /*r
       "Cluster E_{T} vs. #eta",
       "#eta",
       "E_{T} [GeV]",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_energy_phi")),
       "Cluster E_{T} vs. #varphi",
       "#varphi [rad.]",
       "E_{T} [GeV]",
-      "Normalized Counts",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_eta_phi_with_cuts")),
       "Cluster #varphi vs. #eta (after #chi^{2} and E_{T} cuts)",
-      "#varphi [rad.]",
       "#eta",
-      "Normalized Counts",
+      "#varphi [rad.]",
+      "Counts",
       0.8,
       0.25,
       false,
       true,
-      true
+      false
     },
     {
       dynamic_cast<TH1*>(cl->getHisto(histName + "_eta_with_cuts")),
